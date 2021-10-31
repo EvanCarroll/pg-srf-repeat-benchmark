@@ -1,0 +1,28 @@
+#!/bin/sh
+
+make clean;
+make;
+sudo make install;
+
+psql <<EOF
+	DROP EXTENSION repeat;
+	CREATE EXTENSION repeat;
+
+	\timing
+	\echo ValuePerCall
+	SELECT * FROM repeat_valuepercall(7,7);
+	\echo Materialize
+	SELECT * FROM repeat_materialize(7,7);
+	\echo
+	\echo
+	
+	\echo ValuePerCall
+	SELECT count(*) FROM (SELECT * FROM repeat_valuepercall(7,100000000)) s;
+	\echo
+	\echo
+
+	\echo Materialize
+	SELECT count(*) FROM (SELECT * FROM repeat_materialize(7,100000000)) s;
+	\echo
+	\echo
+EOF
