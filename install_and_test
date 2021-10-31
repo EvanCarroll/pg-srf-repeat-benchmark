@@ -5,6 +5,8 @@ make;
 sudo make install;
 
 psql <<EOF
+	SET jit=on;
+	SET work_mem="1GB";
 	DROP EXTENSION repeat;
 	CREATE EXTENSION repeat;
 
@@ -17,12 +19,12 @@ psql <<EOF
 	\echo
 	
 	\echo ValuePerCall
-	SELECT count(*) FROM (SELECT * FROM repeat_valuepercall(7,100000000)) s;
+	SELECT count(*) FROM (SELECT * FROM repeat_valuepercall(7,10000000)) s;
 	\echo
 	\echo
 
 	\echo Materialize
-	SELECT count(*) FROM (SELECT * FROM repeat_materialize(7,100000000)) s;
+	SELECT count(*) FROM (SELECT * FROM repeat_materialize(7,10000000)) s;
 	\echo
 	\echo
 EOF
