@@ -15,7 +15,7 @@ repeat_materialize(PG_FUNCTION_ARGS)
 	rsinfo->setResult = tupstore;
 	
 	TupleDesc	      tupdesc = rsinfo->expectedDesc;
-	rsinfo->setDesc = rsinfo->expectedDesc;
+	//rsinfo->setDesc = rsinfo->expectedDesc;
 
 	bool            nulls[1] = {0};
 
