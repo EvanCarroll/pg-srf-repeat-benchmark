@@ -22,8 +22,9 @@ repeat_materialize(PG_FUNCTION_ARGS)
 	int32  object = PG_GETARG_INT32(0);
 	uint32 times  = PG_GETARG_INT32(1);
 
+	Datum values[1] = { Int32GetDatum(object) };
+
 	while ( times-- ) {
-		Datum values[1] = { Int32GetDatum(object) };
 		tuplestore_putvalues(tupstore, tupdesc, values, nulls);
 	}
 
