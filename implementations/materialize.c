@@ -11,7 +11,7 @@ repeat_materialize(PG_FUNCTION_ARGS)
 	MemoryContext   per_query_ctx = rsinfo->econtext->ecxt_per_query_memory;
 	MemoryContext   oldcontext    = MemoryContextSwitchTo(per_query_ctx);
 
-	Tuplestorestate *tupstore     = tuplestore_begin_heap(true, false, work_mem);
+	Tuplestorestate *tupstore     = tuplestore_begin_heap(false, false, work_mem);
 	rsinfo->setResult = tupstore;
 	
 	TupleDesc	      tupdesc = rsinfo->expectedDesc;
