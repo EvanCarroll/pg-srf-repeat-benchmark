@@ -1,5 +1,3 @@
-PG_MODULE_MAGIC;
-
 Datum repeat_valuepercall(PG_FUNCTION_ARGS);
 PG_FUNCTION_INFO_V1(repeat_valuepercall);
 

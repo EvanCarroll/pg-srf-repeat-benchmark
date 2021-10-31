@@ -5,5 +5,7 @@
 // needed for work_mem constant
 #include "miscadmin.h"
 
-/* #include "implementations/valuepercall.c" */
+PG_MODULE_MAGIC;
+
+#include "./implementations/valuepercall.c"
 #include "./implementations/materialize.c"
