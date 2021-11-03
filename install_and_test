@@ -12,40 +12,53 @@ psql <<EOF
 
 	\timing
 	\echo ValuePerCall
-	SELECT * FROM repeat_valuepercall(7,7);
+	SELECT 'warm_up' FROM repeat_valuepercall(1,1);
 	\echo Materialize
-	SELECT * FROM repeat_materialize(7,7);
+	SELECT 'warm_up' FROM repeat_materialize(1,1);
 	\echo
 	\echo
 
 	\set RS_SIZE 100000
 	
-	\echo ValuePerCall
+	\echo SELECT count(*) FROM (SELECT repeat_valuepercall(7,:RS_SIZE)) s;
+	\echo
+	\echo
+	
+	\echo ValuePerCall - SELECT count(*) FROM (SELECT repeat_valuepercall(7,:RS_SIZE)) s;
 	SELECT count(*) FROM (SELECT repeat_valuepercall(7,:RS_SIZE)) s;
 	\echo
 	\echo
 
-	\echo Materialize
+	\echo Materialize - SELECT count(*) FROM (SELECT repeat_materialize(7,:RS_SIZE)) s;
 	SELECT count(*) FROM (SELECT repeat_materialize(7,:RS_SIZE)) s;
 	\echo
 	\echo
 	
-	\echo ValuePerCall
+	\echo
+	\echo
+	\echo SELECT count(*) FROM (SELECT * FROM repeat_materialize(7,:RS_SIZE)) s;
+	
+	\echo ValuePerCall - SELECT count(*) FROM (SELECT * FROM repeat_valuepercall(7,:RS_SIZE)) s;
 	SELECT count(*) FROM (SELECT * FROM repeat_valuepercall(7,:RS_SIZE)) s;
 	\echo
 	\echo
 
-	\echo Materialize
+	\echo Materialize - SELECT count(*) FROM (SELECT * FROM repeat_materialize(7,:RS_SIZE)) s;
 	SELECT count(*) FROM (SELECT * FROM repeat_materialize(7,:RS_SIZE)) s;
 	\echo
 	\echo
 	
-	\echo ValuePerCall
+
+	\echo
+	\echo
+	\echo SELECT count(*) FROM repeat_materialize(7,:RS_SIZE) s;
+	
+	\echo ValuePerCall - SELECT count(*) FROM repeat_valuepercall(7,:RS_SIZE) s;
 	SELECT count(*) FROM repeat_valuepercall(7,:RS_SIZE) s;
 	\echo
 	\echo
 
-	\echo Materialize
+	\echo Materialize - SELECT count(*) FROM repeat_materialize(7,:RS_SIZE) s;
 	SELECT count(*) FROM repeat_materialize(7,:RS_SIZE) s;
 	\echo
 	\echo
