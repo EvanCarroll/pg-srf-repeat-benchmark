@@ -17,12 +17,11 @@ repeat_materialize(PG_FUNCTION_ARGS)
 	TupleDesc	      tupdesc = rsinfo->expectedDesc;
 	//rsinfo->setDesc = rsinfo->expectedDesc;
 
-	bool            nulls[1] = {0};
-
 	int32  object = PG_GETARG_INT32(0);
 	uint32 times  = PG_GETARG_INT32(1);
 
-	Datum values[1] = { Int32GetDatum(object) };
+	Datum values[1]              = { Int32GetDatum(object) };
+	bool  nulls[sizeof(values)]  = {0};
 
 	while ( times-- ) {
 		tuplestore_putvalues(tupstore, tupdesc, values, nulls);
@@ -30,6 +29,6 @@ repeat_materialize(PG_FUNCTION_ARGS)
 
 	tuplestore_donestoring(tupstore);
 	MemoryContextSwitchTo(oldcontext);
-	return (Datum) 0;
+	PG_RETURN_NULL();
 
 }
