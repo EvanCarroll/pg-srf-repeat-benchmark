@@ -12,10 +12,11 @@ just repeat `what`.
 Implementations
 ====
 
-There are two current implementations both with the same signature described above.
+There are three current implementations both with the same signature described above.
 
-* [`repeat_materialize`](./implementations/materialize.c)
-* [`repeat_valuepercall`](./implementations/valuepercall.c)
+* [`repeat_materialize`](./implementations/materialize.c) (`SRFM_Materialize`)
+* [`repeat_valuepercall`](./implementations/valuepercall.c) (`SRFM_ValuePerCall`)
+* [`repeat_materialize_preferred`](implementations/materialize_preferred.c) (`SFRM_Materialize_Preferred`)
 
 Raison d'être
 ====
@@ -33,7 +34,7 @@ This exists because the [doc says,](https://www.postgresql.org/docs/current/xfun
 > call occurs for the whole result, and no inter-call state is needed.
 
 [I asked under which case would the performance of one be greater than the
-other.](https://dba.stackexchange.com/q/301920/2639) There was almsot no
+other.](https://dba.stackexchange.com/q/301920/2639) There was almost no
 documentation advising one or the other for performance, so I created this repo
 to help understand the call-convention overhead of these two methods.
 

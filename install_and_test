@@ -6,21 +6,27 @@ sudo make install;
 
 psql <<EOF
 	SET jit=on;
-	--SET work_mem="1MB";
+	SET work_mem="1GB";
 	DROP EXTENSION repeat;
 	CREATE EXTENSION repeat;
+	
+	\set RS_SIZE 500000
+	
 
 	\timing
 	\echo ValuePerCall
 	SELECT 'warm_up' FROM repeat_valuepercall(1,1);
 	\echo Materialize
 	SELECT 'warm_up' FROM repeat_materialize(1,1);
+	\echo Materialize_Preferred
+	SELECT 'warm_up' FROM repeat_materialize_preferred(1,1);
 	\echo
 	\echo
 
-	\set RS_SIZE 100000
-	
-	\echo SELECT count(*) FROM (SELECT repeat_valuepercall(7,:RS_SIZE)) s;
+	\echo
+	\echo
+	\echo
+	\echo
 	\echo
 	\echo
 	
@@ -34,9 +40,17 @@ psql <<EOF
 	\echo
 	\echo
 	
+	\echo Materialize - SELECT count(*) FROM (SELECT repeat_materialize_preferred(7,:RS_SIZE)) s;
+	SELECT count(*) FROM (SELECT repeat_materialize_preferred(7,:RS_SIZE)) s;
 	\echo
 	\echo
-	\echo SELECT count(*) FROM (SELECT * FROM repeat_materialize(7,:RS_SIZE)) s;
+	
+	\echo
+	\echo
+	\echo
+	\echo
+	\echo
+	\echo
 	
 	\echo ValuePerCall - SELECT count(*) FROM (SELECT * FROM repeat_valuepercall(7,:RS_SIZE)) s;
 	SELECT count(*) FROM (SELECT * FROM repeat_valuepercall(7,:RS_SIZE)) s;
@@ -48,11 +62,18 @@ psql <<EOF
 	\echo
 	\echo
 	
-
+	\echo Materialize - SELECT count(*) FROM (SELECT * FROM repeat_materialize_preferred(7,:RS_SIZE)) s;
+	SELECT count(*) FROM (SELECT * FROM repeat_materialize_preferred(7,:RS_SIZE)) s;
 	\echo
 	\echo
-	\echo SELECT count(*) FROM repeat_materialize(7,:RS_SIZE) s;
 	
+	\echo
+	\echo
+	\echo
+	\echo
+	\echo
+	\echo
+
 	\echo ValuePerCall - SELECT count(*) FROM repeat_valuepercall(7,:RS_SIZE) s;
 	SELECT count(*) FROM repeat_valuepercall(7,:RS_SIZE) s;
 	\echo
@@ -62,4 +83,11 @@ psql <<EOF
 	SELECT count(*) FROM repeat_materialize(7,:RS_SIZE) s;
 	\echo
 	\echo
+	
+	\echo Materialize - SELECT count(*) FROM repeat_materialize_preferred(7,:RS_SIZE) s;
+	SELECT count(*) FROM repeat_materialize_preferred(7,:RS_SIZE) s;
+	\echo
+	\echo
+
+	\df repeat_*
 EOF

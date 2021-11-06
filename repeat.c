@@ -9,3 +9,4 @@ PG_MODULE_MAGIC;
 
 #include "./implementations/valuepercall.c"
 #include "./implementations/materialize.c"
+#include "./implementations/materialize_preferred.c"
