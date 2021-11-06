@@ -5,7 +5,7 @@ typedef struct
 {
 	Datum  object;
 	uint32 times;
-} repeat_fctx;
+} repeat_valuepercall_fctx;
 
 Datum
 repeat_valuepercall(PG_FUNCTION_ARGS)
@@ -18,7 +18,7 @@ repeat_valuepercall(PG_FUNCTION_ARGS)
 
 		FuncCallContext *funcctx = SRF_FIRSTCALL_INIT();
 		MemoryContext oldcontext = MemoryContextSwitchTo(funcctx->multi_call_memory_ctx);
-		repeat_fctx *fctx        = (repeat_fctx *) palloc(sizeof(repeat_fctx));
+		repeat_valuepercall_fctx *fctx = (repeat_valuepercall_fctx *) palloc(sizeof(repeat_valuepercall_fctx));
 
 		fctx->times  = times;
 		fctx->object = Int32GetDatum(object);
@@ -27,8 +27,8 @@ repeat_valuepercall(PG_FUNCTION_ARGS)
 		MemoryContextSwitchTo(oldcontext);
 	}
 
-	FuncCallContext *funcctx = SRF_PERCALL_SETUP();
-	repeat_fctx *fctx        = funcctx->user_fctx;
+	FuncCallContext *funcctx        = SRF_PERCALL_SETUP();
+	repeat_valuepercall_fctx *fctx  = funcctx->user_fctx;
 
 	if ( (fctx->times)-- > 0 ) {
 		SRF_RETURN_NEXT(funcctx, fctx->object);
