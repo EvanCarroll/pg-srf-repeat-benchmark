@@ -14,8 +14,8 @@ Implementations
 
 There are three current implementations both with the same signature described above.
 
-* [`repeat_materialize`](./implementations/materialize.c) (`SRFM_Materialize`)
-* [`repeat_valuepercall`](./implementations/valuepercall.c) (`SRFM_ValuePerCall`)
+* [`repeat_materialize`](./implementations/materialize.c) (`SFRM_Materialize`)
+* [`repeat_valuepercall`](./implementations/valuepercall.c) (`SFRM_ValuePerCall`)
 * [`repeat_materialize_preferred`](implementations/materialize_preferred.c) (`SFRM_Materialize_Preferred`)
 
 Raison d'être
